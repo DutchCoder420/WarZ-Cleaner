@@ -63,39 +63,9 @@ namespace WarZ_Cleaner.Properties {
         /// <summary>
         ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap MainFormBackground {
-            get {
-                object obj = ResourceManager.GetObject("MainFormBackground", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
         internal static System.Drawing.Bitmap Multiartwork {
             get {
                 object obj = ResourceManager.GetObject("Multiartwork", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap preloading {
-            get {
-                object obj = ResourceManager.GetObject("preloading", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Sucht eine lokalisierte Ressource vom Typ System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap WarzLogo {
-            get {
-                object obj = ResourceManager.GetObject("WarzLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
