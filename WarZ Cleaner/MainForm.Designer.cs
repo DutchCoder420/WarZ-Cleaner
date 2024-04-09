@@ -63,12 +63,12 @@
             // 
             // btnClean
             // 
-            btnClean.Location = new Point(416, 422);
+            btnClean.Location = new Point(366, 420);
             btnClean.Margin = new Padding(4, 3, 4, 3);
             btnClean.Name = "btnClean";
             btnClean.Palette = kryptonPalette1;
             btnClean.PaletteMode = ComponentFactory.Krypton.Toolkit.PaletteMode.Custom;
-            btnClean.Size = new Size(100, 38);
+            btnClean.Size = new Size(200, 38);
             btnClean.StateCommon.Border.DrawBorders = ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Top | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Bottom | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Left | ComponentFactory.Krypton.Toolkit.PaletteDrawBorders.Right;
             btnClean.StateCommon.Border.Rounding = 13;
             btnClean.StateCommon.Content.ShortText.Color1 = Color.Black;
@@ -83,13 +83,13 @@
             lblHeaderTitle.Location = new Point(16, 6);
             lblHeaderTitle.Margin = new Padding(4, 3, 4, 3);
             lblHeaderTitle.Name = "lblHeaderTitle";
-            lblHeaderTitle.Size = new Size(167, 22);
+            lblHeaderTitle.Size = new Size(114, 22);
             lblHeaderTitle.StateCommon.ShortText.Color1 = Color.White;
             lblHeaderTitle.StateCommon.ShortText.Color2 = Color.White;
             lblHeaderTitle.StateCommon.ShortText.Font = new Font("Arial", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblHeaderTitle.TabIndex = 3;
             lblHeaderTitle.Values.ImageTransparentColor = Color.Red;
-            lblHeaderTitle.Values.Text = "WarZ Cache Cleaner";
+            lblHeaderTitle.Values.Text = "WarZ Cleaner";
             // 
             // btnMinimize
             // 
@@ -135,7 +135,7 @@
             lblPatreon.BackColor = Color.Transparent;
             lblPatreon.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblPatreon.LinkColor = Color.White;
-            lblPatreon.Location = new Point(18, 490);
+            lblPatreon.Location = new Point(13, 494);
             lblPatreon.Margin = new Padding(4, 0, 4, 0);
             lblPatreon.Name = "lblPatreon";
             lblPatreon.Size = new Size(135, 16);
@@ -150,7 +150,7 @@
             lblDiscord.BackColor = Color.Transparent;
             lblDiscord.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDiscord.LinkColor = Color.White;
-            lblDiscord.Location = new Point(856, 490);
+            lblDiscord.Location = new Point(869, 494);
             lblDiscord.Margin = new Padding(4, 0, 4, 0);
             lblDiscord.Name = "lblDiscord";
             lblDiscord.Size = new Size(51, 16);
@@ -193,7 +193,8 @@
             StateCommon.Border.Rounding = 20;
             StateCommon.Header.Content.Image.Effect = ComponentFactory.Krypton.Toolkit.PaletteImageEffect.Normal;
             StateCommon.OverlayHeaders = ComponentFactory.Krypton.Toolkit.InheritBool.True;
-            Text = "WarZ Cache Cleaner";
+            Text = " ";
+            Load += MainForm_Load;
             ResumeLayout(false);
             PerformLayout();
         }

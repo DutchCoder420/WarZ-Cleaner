@@ -2,12 +2,15 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
+    <TargetFramework>net8.0-windows10.0.22621.0</TargetFramework>
     <RootNamespace>WarZ_Cleaner</RootNamespace>
     <Nullable>enable</Nullable>
     <UseWindowsForms>true</UseWindowsForms>
     <ImplicitUsings>enable</ImplicitUsings>
     <ApplicationIcon>WarZ_Logo.ico</ApplicationIcon>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <StartupObject>WarZ_Cleaner.Program</StartupObject>
+    <IncludeSymbols>False</IncludeSymbols>
   </PropertyGroup>
 
   <ItemGroup>
@@ -35,10 +38,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Resources\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="ComponentFactory.Krypton.Docking">
       <HintPath>..\Krypton\ComponentFactory.Krypton.Docking.dll</HintPath>
     </Reference>
@@ -61,6 +60,10 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\gfx\" />
   </ItemGroup>
 
 </Project>
