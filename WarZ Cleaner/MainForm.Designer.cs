@@ -150,13 +150,13 @@
             lblDiscord.BackColor = Color.Transparent;
             lblDiscord.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDiscord.LinkColor = Color.White;
-            lblDiscord.Location = new Point(869, 494);
+            lblDiscord.Location = new Point(822, 494);
             lblDiscord.Margin = new Padding(4, 0, 4, 0);
             lblDiscord.Name = "lblDiscord";
-            lblDiscord.Size = new Size(51, 16);
+            lblDiscord.Size = new Size(100, 16);
             lblDiscord.TabIndex = 9;
             lblDiscord.TabStop = true;
-            lblDiscord.Text = "Discord";
+            lblDiscord.Text = "Join our Discord";
             lblDiscord.LinkClicked += lblDiscord_LinkClicked;
             // 
             // MainForm

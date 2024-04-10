@@ -1,12 +1,5 @@
-using System;
 using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Net.Http;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using ComponentFactory.Krypton.Toolkit;
 using Microsoft.Win32;
 
@@ -48,7 +41,7 @@ namespace WarZ_Cleaner
                 using (HttpClient client = new HttpClient())
                 {
                     var content = new StringContent("");
-                    await client.PostAsync(@"https://api.drooptje.com/v1/pings/cacheCleaner/index.php?ping=1", content); // send empty post to track app activity
+                    await client.PostAsync(@"https://api.drooptje.com/v1/WarZ/cleaner/pings/index.php?ping=1", content); // send empty post to track app activity
                 }
             }
             catch { }
@@ -150,8 +143,8 @@ namespace WarZ_Cleaner
             }
             catch (Exception ex)
             {
-                // Print an error message if an exception occurs while processing a directory
-                Console.WriteLine($"Error processing directory {directory}: {ex.Message}");
+                // Show an error message if an exception occurs while processing a directory
+                MessageBox.Show($"Error processing directory {directory}: {ex.Message}");
             }
 
             return count; // Return the total count of files deleted
@@ -183,11 +176,15 @@ namespace WarZ_Cleaner
             Process.Start("https://www.discord.gg/WarZDayZ");
 
         }
+        // Buttons
         private void btnMinimize_Click(object sender, EventArgs e)
         {
             this.WindowState = FormWindowState.Minimized;
         }
-        // Buttons
+        private void btnClose_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
+        }
         private async void btnClean_Click(object sender, EventArgs e)
         {
             string dayzLogDir = GetDayzLogDirectory();
@@ -211,10 +208,6 @@ namespace WarZ_Cleaner
             {
                 MessageBox.Show($"Error {ex.Message}");                                     // Display an error message if an exception occurs
             }
-        }
-        private void btnClose_Click(object sender, EventArgs e)
-        {
-            Application.Exit();
         }
         // Method to enable dragging of the form by clicking on the header
         protected override void WndProc(ref Message m)
