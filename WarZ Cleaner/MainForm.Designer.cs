@@ -138,10 +138,10 @@
             lblPatreon.Location = new Point(13, 494);
             lblPatreon.Margin = new Padding(4, 0, 4, 0);
             lblPatreon.Name = "lblPatreon";
-            lblPatreon.Size = new Size(135, 16);
+            lblPatreon.Size = new Size(137, 16);
             lblPatreon.TabIndex = 8;
             lblPatreon.TabStop = true;
-            lblPatreon.Text = "Support us on patreon";
+            lblPatreon.Text = "Support us on Patreon";
             lblPatreon.LinkClicked += lblPatreon_LinkClicked;
             // 
             // lblDiscord
@@ -150,13 +150,13 @@
             lblDiscord.BackColor = Color.Transparent;
             lblDiscord.Font = new Font("Arial", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             lblDiscord.LinkColor = Color.White;
-            lblDiscord.Location = new Point(869, 494);
+            lblDiscord.Location = new Point(822, 494);
             lblDiscord.Margin = new Padding(4, 0, 4, 0);
             lblDiscord.Name = "lblDiscord";
-            lblDiscord.Size = new Size(51, 16);
+            lblDiscord.Size = new Size(100, 16);
             lblDiscord.TabIndex = 9;
             lblDiscord.TabStop = true;
-            lblDiscord.Text = "Discord";
+            lblDiscord.Text = "Join our Discord";
             lblDiscord.LinkClicked += lblDiscord_LinkClicked;
             // 
             // MainForm
