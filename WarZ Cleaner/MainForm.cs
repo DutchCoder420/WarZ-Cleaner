@@ -1,7 +1,9 @@
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Text.Json;
 using ComponentFactory.Krypton.Toolkit;
 using Microsoft.Win32;
+using Windows.Media.Protection.PlayReady;
 
 namespace WarZ_Cleaner
 {
@@ -27,21 +29,45 @@ namespace WarZ_Cleaner
         public MainForm()
         {
             InitializeComponent();
-            SendPing();
+            SendPingAsync();
         }
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-
-        }
-        // Method to send a ping to a specified URL
-        private async void SendPing()
+        // Check for updates and send ping to track app activity
+        private async void MainForm_Load(object sender, EventArgs e)
         {
             try
             {
                 using (HttpClient client = new HttpClient())
                 {
-                    var content = new StringContent("");
-                    await client.PostAsync(@"https://api.drooptje.com/v1/WarZ/cleaner/pings/index.php?ping=1", content); // send empty post to track app activity
+                    client.DefaultRequestHeaders.Add("User-Agent", "WarZ-Cleaner");
+
+                    // Get github repository data to check for new release
+                    HttpResponseMessage response = await client.GetAsync(@"https://api.github.com/repos/DutchCoder420/WarZ-Cleaner/releases/latest");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        string jsonContent = await response.Content.ReadAsStringAsync();
+
+                        // Compare the version receaved by github with current version
+                        var jsonDoc = JsonDocument.Parse(jsonContent);
+                        if (jsonDoc.RootElement.TryGetProperty("tag_name", out var tagProperty) && tagProperty.GetString() != "1.0.0")
+                        {
+                            // If there is a new version show the update label
+                            lblUpdate.Visible = true;
+                        }
+                    }
+                }
+            }
+            catch { }
+        }
+        private async void SendPingAsync()
+        {
+            try
+            {
+                using (HttpClient client = new HttpClient())
+                {
+                    client.DefaultRequestHeaders.Add("User-Agent", "WarZ-Cleaner");
+
+                    // Send a ping to track app activity this lets us know if the project is worh maintaining
+                    await client.PostAsync(@"https://api.drooptje.com/v1/WarZ/cleaner/pings/index.php?ping=1", new StringContent(""));
                 }
             }
             catch { }
@@ -62,7 +88,7 @@ namespace WarZ_Cleaner
                     foreach (string valueName in key.GetValueNames())
                     {
                         // Check if the value name contains the path to DayZ executable
-                        if (valueName.Contains(@"\DayZ\DayZ_x64.exe"))
+                        if (valueName.Contains(@"\DayZ\DayZ_x64.exe.FriendlyAppName", StringComparison.OrdinalIgnoreCase))
                         {
                             // Return the directory path of DayZ executable
                             return Path.GetDirectoryName(RemoveFriendlyAppNameComplete(valueName));
@@ -75,20 +101,23 @@ namespace WarZ_Cleaner
         // Helper method to remove the friendly app name from the registry value
         private static string RemoveFriendlyAppNameComplete(string path)
         {
-            // Define the suffix of the friendly app name in the path
             const string friendlyAppName = "\\DayZ_x64.exe.FriendlyAppName";
+            const string targetFolder = "\\DayZ";
 
             // Find the index of the friendly app name suffix in the path
-            int index = path.IndexOf(friendlyAppName);
-
-            // Check if the suffix is found
-            if (index >= 0)
+            int suffixIndex = path.LastIndexOf(friendlyAppName);
+            if (suffixIndex >= 0)
             {
-                // Return the substring of the path excluding the friendly app name suffix
-                return path.Substring(0, index);
+                // Find the index of the last occurrence of the target folder in the path
+                int folderIndex = path.LastIndexOf(targetFolder);
+                if (folderIndex >= 0)
+                {
+                    return path.Substring(0, folderIndex + targetFolder.Length);
+                }
             }
-            return path; // Return the original path if the suffix is not found
+            return path;
         }
+
         // Method to get the directory path of the DayZ logs
         private string GetDayzLogDirectory()
         {
@@ -96,9 +125,7 @@ namespace WarZ_Cleaner
             string localAppData = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData);
 
             // Combine the LocalApplicationData path with the "DayZ" folder name
-            string dayZPath = Path.Combine(localAppData, "DayZ");
-
-            return dayZPath;
+            return Path.Combine(localAppData, "DayZ");
         }
         // Method to clean log files asynchronously
         private async Task CleanLogsAsync(string directory)
@@ -162,6 +189,7 @@ namespace WarZ_Cleaner
             return extention.Equals(".RPT", StringComparison.OrdinalIgnoreCase) ||          // .RPT extension
                    extention.Equals(".mdmp", StringComparison.OrdinalIgnoreCase) ||         // .mdmp extension
                    extention.Equals(".log", StringComparison.OrdinalIgnoreCase) ||          // .log extension
+                   extention.Equals(".ch", StringComparison.OrdinalIgnoreCase) ||           // .ch extension
                    filePath.StartsWith("log_") && extention.Equals(".txt") ||               // File name starts with "log_" and has .txt extension
                    filePath.EndsWith("_log") && extention.Equals(".txt") ||                 // File name ends with "_log" and has .txt extension
                    int.TryParse(extention.TrimStart('.'), out _);                           // Check if extension can be parsed as an integer (e.g., ".log.1")
@@ -169,12 +197,15 @@ namespace WarZ_Cleaner
         // Text Labels
         private void lblPatreon_LinkClicked(object sender, EventArgs e)
         {
-            Process.Start("https://www.patreon.com/WarZDayZ");
+            Process.Start(new ProcessStartInfo("https://www.patreon.com/WarZDayZ") { UseShellExecute = true });
         }
         private void lblDiscord_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            Process.Start("https://www.discord.gg/WarZDayZ");
-
+            Process.Start(new ProcessStartInfo("https://www.discord.gg/WarZDayZ") { UseShellExecute = true });
+        }
+        private void lblUpdate_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo("https://github.com/DutchCoder420/WarZ-Cleaner/releases/latest") { UseShellExecute = true });
         }
         // Buttons
         private void btnMinimize_Click(object sender, EventArgs e)
@@ -196,17 +227,25 @@ namespace WarZ_Cleaner
             }
             try
             {
-                string gameInstallPath = GameDirRegistryPath();                             // Get the game installation directory path from the registry
+                // Get the game installation directory path from the registry
+                string gameInstallPath = GameDirRegistryPath();
+
                 if (!string.IsNullOrEmpty(gameInstallPath))
                 {
-                    dayzLogDir = Path.Combine(gameInstallPath, "Profiles");                 // Append the "Profiles" folder to the game installation directory path
+                    if (Directory.Exists(Path.Combine(gameInstallPath, "profiles"))) 
+                    {
+                        // Append the "profiles" folder to the game installation directory path
+                        dayzLogDir =  Path.Combine(gameInstallPath, "profiles");
+                    }
                 }
 
-                await CleanLogsAsync(dayzLogDir);                                           // Clean the log files asynchronously
+                // Clean the log files asynchronously
+                await CleanLogsAsync(dayzLogDir);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error {ex.Message}");                                     // Display an error message if an exception occurs
+                // Display an error message if an exception occurs
+                MessageBox.Show($"Error {ex.Message}");
             }
         }
         // Method to enable dragging of the form by clicking on the header

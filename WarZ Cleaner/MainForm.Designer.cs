@@ -37,6 +37,7 @@
             btnClose = new ComponentFactory.Krypton.Toolkit.KryptonButton();
             lblPatreon = new LinkLabel();
             lblDiscord = new LinkLabel();
+            lblUpdate = new LinkLabel();
             SuspendLayout();
             // 
             // kryptonPalette1
@@ -159,6 +160,21 @@
             lblDiscord.Text = "Join our Discord";
             lblDiscord.LinkClicked += lblDiscord_LinkClicked;
             // 
+            // lblUpdate
+            // 
+            lblUpdate.AutoSize = true;
+            lblUpdate.BackColor = Color.Transparent;
+            lblUpdate.Font = new Font("Segoe UI", 11.25F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            lblUpdate.LinkColor = Color.Lime;
+            lblUpdate.Location = new Point(387, 490);
+            lblUpdate.Name = "lblUpdate";
+            lblUpdate.Size = new Size(158, 20);
+            lblUpdate.TabIndex = 10;
+            lblUpdate.TabStop = true;
+            lblUpdate.Text = "New update available!";
+            lblUpdate.Visible = false;
+            lblUpdate.LinkClicked += lblUpdate_LinkClicked;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -167,6 +183,7 @@
             BackgroundImage = Properties.Resources.Multiartwork;
             BackgroundImageLayout = ImageLayout.Stretch;
             ClientSize = new Size(933, 519);
+            Controls.Add(lblUpdate);
             Controls.Add(lblDiscord);
             Controls.Add(lblPatreon);
             Controls.Add(btnClose);
@@ -208,6 +225,7 @@
         private ComponentFactory.Krypton.Toolkit.KryptonButton btnClose;
         private System.Windows.Forms.LinkLabel lblPatreon;
         private System.Windows.Forms.LinkLabel lblDiscord;
+        private LinkLabel lblUpdate;
     }
 }
 
