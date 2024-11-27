@@ -11,14 +11,14 @@ namespace WarZ_Cleaner
     {
 
         /*
-        |       Made with <3 by Dutchcoder for WarZ DayZ
+        |       Made with <3 by DutchCoder for WarZ DayZ
         |
-        |       made this in a hurry so dont say its messy 
-        |       respect my work and dont rename it for ur server
+        |       made this in an hour so it's a little messy 
+        |       please respect my work by not renaming it for ur server
         |
         */
 
-        // Dragging
+        // Dragging functionality
         private const int WM_NCHITTEST = 0x84;
         private const int HT_CAPTION = 0x2;
         [DllImport("user32.dll")]
@@ -26,12 +26,19 @@ namespace WarZ_Cleaner
         [DllImport("user32.dll")]
         private static extern bool ReleaseCapture();
 
-        public MainForm()
+        private bool noGui;
+
+        public MainForm(bool noGui)
         {
+            this.noGui = noGui;
             InitializeComponent();
-            SendPingAsync();
+            
+            if (noGui) 
+            {
+                btnClean_Click(null, null);
+            }
         }
-        // Check for updates and send ping to track app activity
+        // Check for updates
         private async void MainForm_Load(object sender, EventArgs e)
         {
             try
@@ -54,20 +61,6 @@ namespace WarZ_Cleaner
                             lblUpdate.Visible = true;
                         }
                     }
-                }
-            }
-            catch { }
-        }
-        private async void SendPingAsync()
-        {
-            try
-            {
-                using (HttpClient client = new HttpClient())
-                {
-                    client.DefaultRequestHeaders.Add("User-Agent", "WarZ-Cleaner");
-
-                    // Send a ping to track app activity this lets us know if the project is worh maintaining
-                    await client.PostAsync(@"https://api.drooptje.com/v1/WarZ/cleaner/pings/index.php?ping=1", new StringContent(""));
                 }
             }
             catch { }
@@ -134,14 +127,21 @@ namespace WarZ_Cleaner
             int count = await Task.Run(() => DeleteFiles(directory)); // Asynchronously delete files in the specified directory
             Cursor = Cursors.Default; // Set the cursor back to the default cursor
 
-            // Display a message box indicating the number of files deleted
-            if (count == 0)
+            if (!noGui)
             {
-                MessageBox.Show("No files have been found!");
+                // Display a message box indicating the number of files deleted
+                if (count == 0)
+                {
+                    MessageBox.Show("No files have been found!");
+                }
+                else
+                {
+                    MessageBox.Show($"{count} Files have been found and deleted!");
+                }
             }
             else
             {
-                MessageBox.Show($"{count} Files have been found and deleted!");
+                Application.Exit();
             }
         }
         // Method to recursively delete log files in a directory
@@ -232,10 +232,10 @@ namespace WarZ_Cleaner
 
                 if (!string.IsNullOrEmpty(gameInstallPath))
                 {
-                    if (Directory.Exists(Path.Combine(gameInstallPath, "profiles"))) 
+                    if (Directory.Exists(Path.Combine(gameInstallPath, "profiles")))
                     {
                         // Append the "profiles" folder to the game installation directory path
-                        dayzLogDir =  Path.Combine(gameInstallPath, "profiles");
+                        dayzLogDir = Path.Combine(gameInstallPath, "profiles");
                     }
                 }
 

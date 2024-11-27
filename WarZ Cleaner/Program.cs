@@ -6,12 +6,17 @@ namespace WarZ_Cleaner
         ///  The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            bool nogui = args.Contains("noGui");
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new MainForm());
+            MainForm mainForm = new MainForm(nogui);
+            if (nogui)
+            {
+                mainForm.WindowState = FormWindowState.Minimized;
+            }
+            Application.Run(mainForm);
         }
     }
 }

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "WarZ Cleaner": {
+      "commandName": "Project",
+      "commandLineArgs": "noGui"
+    }
+  }
+}
