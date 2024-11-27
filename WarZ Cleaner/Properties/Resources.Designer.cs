@@ -69,35 +69,5 @@ namespace WarZ_Cleaner.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap NicePng_tool_icon_png_3349023 {
-            get {
-                object obj = ResourceManager.GetObject("NicePng_tool-icon-png_3349023", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap NicePng_tool_icon_png_33490231 {
-            get {
-                object obj = ResourceManager.GetObject("NicePng_tool-icon-png_33490231", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap th_3267787282 {
-            get {
-                object obj = ResourceManager.GetObject("th-3267787282", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }
